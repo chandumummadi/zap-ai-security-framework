@@ -31,3 +31,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     run_zap_scan(mode=args.mode, target=args.target)
+
+# Dummy
