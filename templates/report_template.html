@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZAP AI Enriched Security Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 2rem;
+        }
+        .vuln {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .vuln h2 { color: #c0392b; }
+        .vuln pre {
+            background: #f0f0f0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>ZAP AI Enriched Security Report</h1>
+    {% for vuln in vulnerabilities %}
+    <div class="vuln">
+        <h2>{{ vuln.name }}</h2>
+        <p><strong>Risk:</strong> {{ vuln.risk }}</p>
+        <p><strong>URL:</strong> <a href="{{ vuln.url }}">{{ vuln.url }}</a></p>
+        <p><strong>Description:</strong></p>
+        <div>{{ vuln.description | safe }}</div>
+        <p><strong>Solution:</strong></p>
+        <div>{{ vuln.solution | safe }}</div>
+        <p><strong>CWE:</strong> {{ vuln.cwe }}</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>{{ vuln.ai_explanation }}</pre>
+    </div>
+    {% endfor %}
+</body>
+</html>

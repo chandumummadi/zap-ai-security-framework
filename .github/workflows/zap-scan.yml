@@ -1,0 +1,79 @@
+name: ZAP Security Scan with AI Enrichment
+
+on:
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * 1' # every Monday at 2AM UTC
+
+jobs:
+  zap-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run ZAP baseline scan (Docker)
+        run: |
+          docker run -v $(pwd)/reports:/zap/wrk/:rw -t zaproxy/zap-stable zap-baseline.py \
+            -t https://chandumummadi.github.io/sharathchandramummadi.github.io/
+            -J report.json -r report.html
+
+      - name: Parse ZAP output
+        run: |
+          source venv/bin/activate
+          python parse_results.py
+
+      - name: AI Explain vulnerabilities
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          source venv/bin/activate
+          python ai/explain_vulnerabilities.py
+
+      - name: Generate HTML report
+        run: |
+          source venv/bin/activate
+          python ai/generate_html_report.py
+
+      - name: Upload HTML report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-security-report
+          path: reports/final_report.html
+
+      - name: Comment summary on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🛡️ **ZAP Security Scan Summary**
+            - Target: https://example.com
+            - Risk Summary: Based on AI explanations in `enriched_report.json`
+            - 📄 [Download Report](./reports/final_report.html)
+
+      - name: Fail build on critical risk (optional)
+        run: |
+          CRITICAL_COUNT=$(grep -i 'High' reports/enriched_report.json | wc -l)
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "❌ Found $CRITICAL_COUNT high-risk vulnerabilities. Failing build."
+            exit 1
+          else
+            echo "✅ No high-risk vulnerabilities found."
+          fi
