@@ -54,7 +54,7 @@ jobs:
           python ai/generate_html_report.py
 
       - name: Upload HTML report as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: zap-security-report
           path: reports/final_report.html
