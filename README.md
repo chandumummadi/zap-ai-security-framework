@@ -133,13 +133,6 @@ zap-ai-security-framework/
 
 ---
 
-### 🧷 Prerequisites
-
-* Docker must be installed and running
-* Python 3.10+
-* OpenAI API Key in `.env` file:
-
-
 ## 🔧 Setup & Recreate This Project Locally ?
 Follow these steps to clone and run the **ZAP AI Security Framework** on your local machine.
 
