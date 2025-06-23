@@ -1,5 +1,6 @@
 
-# 🔐 ZAP AI Security Framework
+# 🔐 Automated Web App Security Testing Framework with OWASP ZAP
+
 
 ## 🚀 Project Overview
 
