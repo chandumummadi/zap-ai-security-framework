@@ -133,14 +133,14 @@ zap-ai-security-framework/
 
 ---
 
-## 🔧 Setup & Recreate This Project Locally ?
+## 🔧 Setup & Recreate This Project Locally
 Follow these steps to clone and run the **ZAP AI Security Framework** on your local machine.
 
 ### 🧷 0. Prerequisites
 
-* Docker must be installed and running
-* Python 3.10+
-* OpenAI API Key
+- [ ] Docker installed and running  
+- [ ] Python 3.10+  
+- [ ] OpenAI API Key (to be added in `.env`)
 
 
 
@@ -178,7 +178,8 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory and add your OpenAI API key:
 
 ```env
-OPENAI_API_KEY="paste-your-openai-api-key-here"
+OPENAI_API_KEY=your_openai_api_key
+
 ```
 
 ---
@@ -191,8 +192,11 @@ This project runs OWASP ZAP using a Docker container, so ensure Docker is instal
 
 ### 🚀 6. Run a Scan
 
+
+✅ Fix:
+
 ```bash
-python security-scan/main.py --mode baseline --target https://example.com
+python security-scan/main.py --mode baseline --target https://your-app.com
 ```
 
 > Reports will be saved in the `/output` directory:
