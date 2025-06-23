@@ -11,9 +11,12 @@ def run_zap_scan(mode: str, target: str):
     report_json = "report.json"
     report_html = "report.html"
 
+    output_dir = os.path.join(os.getcwd(), "output")
+    os.makedirs(output_dir, exist_ok=True)  # Ensure 'output/' exists
+
     cmd = [
         "docker", "run",
-        "-v", f"{os.getcwd()}:/zap/wrk/:rw",
+        "-v", f"{output_dir}:/zap/wrk/:rw",
         "-t", "zaproxy/zap-stable",
         script,
         "-t", target,

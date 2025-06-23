@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZAP AI Enriched Security Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 2rem;
+        }
+        .vuln {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .vuln h2 { color: #c0392b; }
+        .vuln pre {
+            background: #f0f0f0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>ZAP AI Enriched Security Report</h1>
+    
+    <div class="vuln">
+        <h2>Content Security Policy (CSP) Header Not Set</h2>
+        <p><strong>Risk:</strong> Medium (High)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p></div>
+        <p><strong>CWE:</strong> 693</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The Content Security Policy (CSP) Header Not Set vulnerability means that the website is not implementing a security feature that helps prevent certain types of attacks, such as Cross Site Scripting (XSS) and data injection attacks. Without the CSP header, the website is more vulnerable to these attacks.
+
+2. Why it matters:
+This vulnerability matters because without a CSP header, malicious actors can exploit vulnerabilities in the website to perform attacks like XSS, data theft, site defacement, or distribution of malware. By not implementing CSP, the website is at a higher risk of being compromised and sensitive data being exposed.
+
+3. How a developer can fix it:
+To fix this vulnerability, a developer should ensure that the web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header. This header specifies approved sources of content that browsers should be allowed to load on the page, thereby reducing the risk of attacks like XSS. 
+
+Example of setting the CSP header in the HTTP response headers:
+```
+Content-Security-Policy: default-src 'self';
+```
+
+This example sets the default policy to only allow resources to be loaded from the same origin ('self'). Developers can customize the CSP header based on their specific needs and approved sources of content.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Cross-Domain Misconfiguration</h2>
+        <p><strong>Risk:</strong> Medium (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p><p>Configure the "Access-Control-Allow-Origin" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p></div>
+        <p><strong>CWE:</strong> 264</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Cross-Domain Misconfiguration refers to a vulnerability where a web server is misconfigured to allow cross-origin requests, potentially exposing sensitive data to unauthorized parties. This can lead to data leakage, unauthorized access, and other security risks.
+
+2. This vulnerability matters because it can compromise the confidentiality and integrity of sensitive data stored on the server. If attackers are able to exploit this misconfiguration, they can access and manipulate data that they should not have access to, leading to potential data breaches and loss of trust from customers.
+
+3. To fix this vulnerability, developers can implement proper CORS configuration on the web server to restrict access to resources from specific domains. This can be done by setting the "Access-Control-Allow-Origin" HTTP header to only allow requests from trusted domains. Alternatively, developers can remove all CORS headers entirely to enforce the Same Origin Policy more strictly. Here is an example of how to configure CORS in Node.js using the Express framework:
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://trusted-domain.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
+// Rest of your Express app code here
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+```
+
+By implementing proper CORS configuration, developers can mitigate the risk of Cross-Domain Misconfiguration and protect sensitive data from unauthorized access.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Cross-Domain JavaScript Source File Inclusion</h2>
+        <p><strong>Risk:</strong> Low (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The page includes one or more script files from a third-party domain.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p></div>
+        <p><strong>CWE:</strong> 829</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Cross-Domain JavaScript Source File Inclusion means that a web page is including JavaScript files from a third-party domain, which can potentially introduce security risks such as cross-site scripting attacks.
+
+2. This vulnerability matters because including JavaScript files from untrusted or malicious sources can allow attackers to execute arbitrary code on the website, steal sensitive information, or manipulate the content of the page. This can lead to unauthorized access to user data, account takeovers, and other malicious activities.
+
+3. To fix this vulnerability, developers should ensure that JavaScript source files are loaded only from trusted sources that they control. One way to do this is by hosting the JavaScript files locally on the same domain as the website. Here is an example of how to include a JavaScript file locally:
+
+```html
+<script src="js/myscript.js"></script>
+```
+
+By hosting the JavaScript file locally, developers can prevent attackers from tampering with the code and reduce the risk of cross-domain attacks. Additionally, developers should regularly monitor and update the JavaScript files to ensure they are not compromised or outdated.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Dangerous JS Functions</h2>
+        <p><strong>Risk:</strong> Low (Low)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com/main.js">https://juice-shop.herokuapp.com/main.js</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>A dangerous JS function seems to be in use that would leave the site vulnerable.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>See the references for security advice on the use of these functions.</p></div>
+        <p><strong>CWE:</strong> 749</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The vulnerability of Dangerous JS Functions refers to the use of JavaScript functions that can potentially introduce security risks to a website or web application. These functions may include features that can be exploited by attackers to carry out malicious activities such as cross-site scripting (XSS) attacks or data manipulation.
+
+2. Why it matters:
+While the risk level of this vulnerability is categorized as low, it is still important to address it as it can lead to serious security breaches if left unattended. Attackers can exploit these dangerous JS functions to gain unauthorized access to sensitive information, compromise user data, or disrupt the normal functioning of the website.
+
+3. How a developer can fix it:
+To fix this vulnerability, developers should review the codebase of the website or web application to identify and replace any dangerous JS functions with safer alternatives. They can also refer to security resources and best practices to ensure that the code is secure and free from vulnerabilities.
+
+Example of fixing the vulnerability:
+Instead of using the eval() function in JavaScript, which is considered dangerous due to its potential for code injection, developers can use alternative methods such as using JSON.parse() for parsing JSON data. Here is an example of how to replace the eval() function with JSON.parse():
+
+Before:
+```javascript
+var data = eval('(' + jsonString + ')');
+```
+
+After:
+```javascript
+var data = JSON.parse(jsonString);
+```
+
+By making such changes and avoiding the use of dangerous JS functions, developers can mitigate the risk of security vulnerabilities in their code.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Deprecated Feature Policy Header Set</h2>
+        <p><strong>Risk:</strong> Low (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The header has now been renamed to Permissions-Policy.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header instead of the Feature-Policy header.</p></div>
+        <p><strong>CWE:</strong> 16</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The Deprecated Feature Policy Header Set vulnerability refers to using the outdated "Feature-Policy" header in web applications instead of the newer "Permissions-Policy" header. This can lead to potential security risks as the Feature-Policy header is no longer supported and may not provide the necessary security controls.
+
+2. Why it matters:
+It matters because using deprecated headers can leave your web application vulnerable to security threats. Attackers can exploit this vulnerability to bypass security controls or access sensitive information, potentially compromising the integrity and confidentiality of the application and its users.
+
+3. How a developer can fix it:
+To fix this vulnerability, developers should update their web server, application server, or load balancer configurations to set the "Permissions-Policy" header instead of the deprecated "Feature-Policy" header. Here is an example of how to set the Permissions-Policy header in the HTTP response headers using Apache configuration:
+
+```
+Header always set Permissions-Policy "geolocation=(), microphone=()"
+```
+
+This code snippet sets the Permissions-Policy header with specific directives for geolocation and microphone permissions. Developers should customize the directives based on the specific needs of their application.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Insufficient Site Isolation Against Spectre Vulnerability</h2>
+        <p><strong>Risk:</strong> Low (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p></div>
+        <p><strong>CWE:</strong> 693</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Insufficient Site Isolation Against Spectre Vulnerability means that the website does not properly isolate different parts of the site from each other, leaving it vulnerable to attacks like Spectre which can exploit these isolation weaknesses to gain unauthorized access to sensitive data.
+
+2. This vulnerability matters because it can lead to unauthorized access to sensitive information such as user data, financial information, or other confidential data stored on the website. This can result in data breaches, financial losses, and damage to the reputation of the website and its owners.
+
+3. To fix this vulnerability, a developer can set the Cross-Origin-Embedder-Policy header appropriately in the application/web server configuration. The header should be set to 'require-corp' for documents to ensure that only cross-origin resources that explicitly grant permission are loaded. Here is an example of how this header can be set in the server configuration file:
+
+```
+Header always set Cross-Origin-Embedder-Policy "require-corp"
+```
+
+By setting this header correctly, the website can protect against the Spectre vulnerability and enhance its security posture. Additionally, it is recommended to ensure that users are using modern, standards-compliant web browsers that support the Cross-Origin-Embedder-Policy header to fully mitigate this vulnerability.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Strict-Transport-Security Header Not Set</h2>
+        <p><strong>Risk:</strong> Low (High)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p></div>
+        <p><strong>CWE:</strong> 319</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The Strict-Transport-Security Header Not Set vulnerability means that the web server is not sending the Strict-Transport-Security (HSTS) header in its HTTP responses. This header informs the browser that it should only interact with the website over a secure HTTPS connection, thereby protecting users from certain types of attacks.
+
+2. Why it matters:
+This vulnerability matters because without the HSTS header being set, users visiting the website may be susceptible to man-in-the-middle attacks where an attacker could intercept and modify the communication between the user and the website. This could lead to sensitive information being compromised or malicious code being injected into the user's browser.
+
+3. How a developer can fix it:
+To fix this vulnerability, the developer needs to ensure that the web server is configured to send the Strict-Transport-Security header in its HTTP responses. This can typically be done by adding the following configuration to the server:
+
+```
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+```
+
+This configuration sets the HSTS header with a max-age of 31536000 seconds (1 year) and includes all subdomains. By setting this header, the browser will remember to only access the website over HTTPS for the specified duration, thereby mitigating the risk of man-in-the-middle attacks.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Timestamp Disclosure - Unix</h2>
+        <p><strong>Risk:</strong> Low (Low)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>A timestamp was disclosed by the application/web server. - Unix</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p></div>
+        <p><strong>CWE:</strong> 497</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Timestamp Disclosure - Unix vulnerability means that the application or web server is revealing sensitive timestamp information, such as when a particular action was performed or when data was last accessed, to users or potential attackers.
+
+2. This vulnerability matters because disclosing timestamps can potentially provide attackers with valuable information about the system's activity and usage patterns. This information can be used to identify potential vulnerabilities, plan targeted attacks, or gather intelligence for further exploitation.
+
+3. To fix this vulnerability, developers should ensure that sensitive timestamp information is not exposed to users or attackers. One way to address this issue is by properly sanitizing and filtering the data before displaying it to users. Developers can also consider limiting the amount of timestamp information that is disclosed or obfuscating the timestamps to prevent easy interpretation by attackers.
+
+Example of fixing the vulnerability in code:
+```javascript
+// Before displaying timestamp information, check if it is sensitive data
+if (isSensitive(timestampData)) {
+  // Filter or obfuscate the timestamp data before displaying it
+  filteredTimestamp = filterTimestamp(timestampData);
+  console.log(filteredTimestamp);
+} else {
+  // Proceed with displaying the timestamp data as usual
+  console.log(timestampData);
+}
+
+function isSensitive(timestampData) {
+  // Add logic to determine if the timestamp data is sensitive
+  // For example, if the timestamp reveals user activity or system usage patterns
+  return true;
+}
+
+function filterTimestamp(timestampData) {
+  // Add logic to obfuscate or filter the timestamp data
+  // For example, converting the timestamp into a different format or masking certain parts of it
+  return obfuscatedTimestamp;
+}
+```</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Information Disclosure - Suspicious Comments</h2>
+        <p><strong>Risk:</strong> Informational (Low)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com/main.js">https://juice-shop.herokuapp.com/main.js</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The response appears to contain suspicious comments which may help an attacker.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p></div>
+        <p><strong>CWE:</strong> 615</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Information Disclosure - Suspicious Comments refers to the presence of comments in the code that reveal sensitive information or provide clues to potential vulnerabilities in the application. These comments could potentially aid an attacker in understanding the inner workings of the application and exploiting it.
+
+2. This vulnerability matters because it can provide attackers with valuable insights into the application's code structure, potential weaknesses, or sensitive information. This information can be used to launch targeted attacks, compromise user data, or disrupt the application's functionality.
+
+3. To fix this vulnerability, developers should review the codebase and remove any comments that disclose sensitive information or hint at potential security flaws. Additionally, developers should ensure that any underlying issues mentioned in the comments are addressed and fixed. Here is an example of how a developer can remove suspicious comments in JavaScript code:
+
+Before:
+```javascript
+// Database credentials - do not share
+const dbUsername = 'admin';
+const dbPassword = 'password123';
+```
+
+After:
+```javascript
+const dbUsername = 'admin';
+const dbPassword = 'password123';
+``` 
+
+By removing comments that reveal sensitive information like database credentials, developers can mitigate the risk of information disclosure through suspicious comments.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Modern Web Application</h2>
+        <p><strong>Risk:</strong> Informational (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>This is an informational alert and so no changes are required.</p></div>
+        <p><strong>CWE:</strong> -1</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. This vulnerability indicates that the web application is built using modern web technologies, which may include the use of Ajax (Asynchronous JavaScript and XML) for dynamic content loading without requiring a full page reload.
+
+2. It matters because modern web applications that utilize Ajax can introduce security risks if not implemented properly. Ajax requests can potentially expose sensitive data or functionality if not properly secured, leading to vulnerabilities such as Cross-Site Scripting (XSS) or Cross-Site Request Forgery (CSRF).
+
+3. To fix this vulnerability, developers should ensure that proper security measures are implemented when using Ajax in their web application. This includes validating and sanitizing user input, implementing proper authentication and authorization mechanisms, and using secure coding practices to prevent common vulnerabilities.
+
+Example of implementing secure Ajax request in JavaScript:
+```javascript
+// Example of a secure Ajax request using Fetch API
+fetch('https://api.example.com/data', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer yourAccessTokenHere',
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  console.log(data);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+```
+
+By following secure coding practices and implementing proper security controls, developers can mitigate the risks associated with using Ajax in modern web applications.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Non-Storable Content</h2>
+        <p><strong>Risk:</strong> Informational (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com/ftp/coupons_2013.md.bak">https://juice-shop.herokuapp.com/ftp/coupons_2013.md.bak</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable ("GET", "HEAD", and "POST" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The "no-store" cache directive must not appear in the request or response header fields</p><p>For caching by "shared" caches such as "proxy" caches, the "private" response directive must not appear in the response</p><p>For caching by "shared" caches such as "proxy" caches, the "Authorization" header field must not appear in the request, unless the response explicitly allows it (using one of the "must-revalidate", "public", or "s-maxage" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an "Expires" header field</p><p>It must contain a "max-age" response directive</p><p>For "shared" caches such as "proxy" caches, it must contain a "s-maxage" response directive</p><p>It must contain a "Cache Control Extension" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p></div>
+        <p><strong>CWE:</strong> 524</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Non-Storable Content vulnerability means that the response contents of a web application are not able to be stored by caching components such as proxy servers. This can impact the performance of the application as caching helps in improving response times by serving cached content instead of fetching it from the server every time.
+
+2. This vulnerability matters because caching plays a crucial role in optimizing the performance of web applications by reducing the load on servers and improving response times for users. If content is not storable by caching components, it can lead to increased load on the server, slower response times, and a poor user experience.
+
+3. To fix the Non-Storable Content vulnerability, a developer can ensure that the response content meets the conditions required for caching. Here is an example of how this can be achieved in the code:
+
+```javascript
+// Example code to make response content storable by caching components
+
+// Set cache control headers in the response
+response.setHeader("Cache-Control", "public, max-age=3600"); // Allow caching by proxy servers for 1 hour
+
+// Set an Expires header for the response
+response.setHeader("Expires", new Date(Date.now() + 3600000).toUTCString()); // Set expiration time for 1 hour
+
+// Ensure the response status code is cacheable
+if (response.statusCode >= 200 && response.statusCode < 300) {
+    // Response status code is cacheable
+} else {
+    // Handle non-cacheable status codes
+}
+```
+
+By implementing the above code snippet, the developer can ensure that the response content is marked as storable by caching components, thereby improving the performance of the web application.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Re-examine Cache-control Directives</h2>
+        <p><strong>Risk:</strong> Informational (Low)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>For secure content, ensure the cache-control HTTP header is set with "no-cache, no-store, must-revalidate". If an asset should be cached consider setting the directives "public, max-age, immutable".</p></div>
+        <p><strong>CWE:</strong> 525</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The vulnerability "Re-examine Cache-control Directives" refers to the improper or missing configuration of the cache-control header in HTTP responses. This can lead to sensitive content being cached by browsers and proxies, potentially exposing it to unauthorized access.
+
+2. Why it matters:
+While this vulnerability is categorized as low risk, it is still important to address as it can lead to the exposure of sensitive information. If sensitive content is cached, it can be accessed by unauthorized users, compromising the security and confidentiality of the data.
+
+3. How a developer can fix it:
+To fix this vulnerability, developers should ensure that the cache-control header is properly configured in HTTP responses. For secure content that should not be cached, the header should include the directives "no-cache, no-store, must-revalidate". On the other hand, for assets that can be cached, developers can use directives like "public, max-age, immutable".
+
+Code example for setting cache-control header in Node.js using Express:
+
+```javascript
+const express = require('express');
+const app = express();
+
+// Middleware to set cache-control header
+app.use((req, res, next) => {
+  // For secure content
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  // For assets that can be cached
+  // res.setHeader('Cache-Control', 'public, max-age=3600, immutable');
+  next();
+});
+
+// Your routes and other middleware
+// ...
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+```</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Storable and Cacheable Content</h2>
+        <p><strong>Risk:</strong> Informational (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com/ftp">https://juice-shop.herokuapp.com/ftp</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where "shared" caching servers such as "proxy" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div><p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p></div>
+        <p><strong>CWE:</strong> 524</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. What it means:
+The vulnerability of Storable and Cacheable Content refers to the issue where the response contents of a web application are storable by caching components like proxy servers. This means that sensitive information, personal data, or user-specific details can be stored in the cache and retrieved by unauthorized users, potentially leading to data leakage or unauthorized access to user sessions.
+
+2. Why it matters:
+This vulnerability matters because it can result in the exposure of sensitive information to unauthorized users. If a caching server stores and retrieves sensitive data from the cache, it can lead to privacy breaches, data leaks, and potentially allow attackers to gain control over user sessions. This can have serious consequences for the security and privacy of users accessing the web application.
+
+3. How a developer can fix it:
+To fix the Storable and Cacheable Content vulnerability, developers should ensure that sensitive information is not stored in the cache and is not retrievable by unauthorized users. This can be achieved by implementing proper HTTP response headers to control caching behavior. Developers can use the following HTTP response headers to prevent caching of sensitive data:
+
+```html
+Cache-Control: no-cache, no-store, must-revalidate, private
+Pragma: no-cache
+Expires: 0
+```
+
+By including these headers in the HTTP response, caching servers will be instructed not to store the response and not to retrieve it from the cache without validation. This helps in preventing unauthorized access to sensitive information and mitigates the risk of data leakage.</pre>
+    </div>
+    
+    <div class="vuln">
+        <h2>Storable but Non-Cacheable Content</h2>
+        <p><strong>Risk:</strong> Informational (Medium)</p>
+        <p><strong>URL:</strong> <a href="https://juice-shop.herokuapp.com">https://juice-shop.herokuapp.com</a></p>
+        <p><strong>Description:</strong></p>
+        <div><p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users.</p></div>
+        <p><strong>Solution:</strong></p>
+        <div></div>
+        <p><strong>CWE:</strong> 524</p>
+        <p><strong>AI Explanation:</strong></p>
+        <pre>1. Storable but Non-Cacheable Content vulnerability means that the response contents of a web application can be stored by caching components like proxy servers, but the content will not be retrieved directly from the cache without proper validation of the request upstream. This can lead to sensitive information being stored in caches and potentially exposed to unauthorized users.
+
+2. This vulnerability matters because it can result in unauthorized access to sensitive information stored in caches. If an attacker gains access to cached data containing sensitive information such as user credentials or personal data, it can lead to privacy violations, data breaches, and other security incidents.
+
+3. To fix this vulnerability, developers should ensure that the response contents are properly validated before being stored in caches. This can be achieved by setting appropriate cache-control headers in the HTTP response to prevent caching of sensitive data. Developers can use the "Cache-Control" header with directives like "no-store" or "private" to prevent caching of sensitive information.
+
+Example code snippet in Node.js using Express.js:
+
+```javascript
+app.get('/sensitive-data', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  // Code to handle sensitive data retrieval and response
+});
+```
+
+By setting the Cache-Control header to 'no-store', the response contents will not be stored in caches, mitigating the risk of unauthorized access to sensitive information.</pre>
+    </div>
+    
+</body>
+</html>

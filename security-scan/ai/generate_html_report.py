@@ -2,9 +2,10 @@ import json
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
-INPUT_FILE = Path("reports/enriched_report.json")
-TEMPLATE_PATH = Path("templates")
-OUTPUT_FILE = Path("reports/final_report.html")
+# ✅ Updated paths
+INPUT_FILE = Path("output/enriched_report.json")
+TEMPLATE_PATH = Path(__file__).parent.parent / "templates"
+OUTPUT_FILE = Path("output/final_report.html")
 
 def load_data():
     with open(INPUT_FILE, "r") as f:
@@ -20,10 +21,10 @@ def save_output(html):
         f.write(html)
     print(f"✅ Report saved to {OUTPUT_FILE}")
 
-def main():
+def generate_report():
     data = load_data()
     html = render_html(data)
     save_output(html)
 
 if __name__ == "__main__":
-    main()
+    generate_report()

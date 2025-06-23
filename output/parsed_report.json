@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Content Security Policy (CSP) Header Not Set",
+    "risk": "Medium (High)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+    "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
+    "cwe": "693",
+    "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>"
+  },
+  {
+    "name": "Cross-Domain Misconfiguration",
+    "risk": "Medium (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server.</p>",
+    "solution": "<p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p><p>Configure the \"Access-Control-Allow-Origin\" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p>",
+    "cwe": "264",
+    "reference": "<p>https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy</p>"
+  },
+  {
+    "name": "Cross-Domain JavaScript Source File Inclusion",
+    "risk": "Low (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js",
+    "description": "<p>The page includes one or more script files from a third-party domain.</p>",
+    "solution": "<p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p>",
+    "cwe": "829",
+    "reference": ""
+  },
+  {
+    "name": "Dangerous JS Functions",
+    "risk": "Low (Low)",
+    "url": "https://juice-shop.herokuapp.com/main.js",
+    "param": "",
+    "description": "<p>A dangerous JS function seems to be in use that would leave the site vulnerable.</p>",
+    "solution": "<p>See the references for security advice on the use of these functions.</p>",
+    "cwe": "749",
+    "reference": "<p>https://angular.io/guide/security</p>"
+  },
+  {
+    "name": "Deprecated Feature Policy Header Set",
+    "risk": "Low (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>The header has now been renamed to Permissions-Policy.</p>",
+    "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header instead of the Feature-Policy header.</p>",
+    "cwe": "16",
+    "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy</p><p>https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/</p>"
+  },
+  {
+    "name": "Insufficient Site Isolation Against Spectre Vulnerability",
+    "risk": "Low (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "Cross-Origin-Embedder-Policy",
+    "description": "<p>Cross-Origin-Embedder-Policy header is a response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS).</p>",
+    "solution": "<p>Ensure that the application/web server sets the Cross-Origin-Embedder-Policy header appropriately, and that it sets the Cross-Origin-Embedder-Policy header to 'require-corp' for documents.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Embedder-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-embedder-policy).</p>",
+    "cwe": "693",
+    "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy</p>"
+  },
+  {
+    "name": "Strict-Transport-Security Header Not Set",
+    "risk": "Low (High)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+    "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+    "cwe": "319",
+    "reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>https://caniuse.com/stricttransportsecurity</p><p>https://datatracker.ietf.org/doc/html/rfc6797</p>"
+  },
+  {
+    "name": "Timestamp Disclosure - Unix",
+    "risk": "Low (Low)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>A timestamp was disclosed by the application/web server. - Unix</p>",
+    "solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+    "cwe": "497",
+    "reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>"
+  },
+  {
+    "name": "Information Disclosure - Suspicious Comments",
+    "risk": "Informational (Low)",
+    "url": "https://juice-shop.herokuapp.com/main.js",
+    "param": "",
+    "description": "<p>The response appears to contain suspicious comments which may help an attacker.</p>",
+    "solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
+    "cwe": "615",
+    "reference": ""
+  },
+  {
+    "name": "Modern Web Application",
+    "risk": "Informational (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+    "solution": "<p>This is an informational alert and so no changes are required.</p>",
+    "cwe": "-1",
+    "reference": ""
+  },
+  {
+    "name": "Non-Storable Content",
+    "risk": "Informational (Medium)",
+    "url": "https://juice-shop.herokuapp.com/ftp/coupons_2013.md.bak",
+    "param": "",
+    "description": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+    "solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+    "cwe": "524",
+    "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>"
+  },
+  {
+    "name": "Re-examine Cache-control Directives",
+    "risk": "Informational (Low)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "cache-control",
+    "description": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+    "solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+    "cwe": "525",
+    "reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>"
+  },
+  {
+    "name": "Storable and Cacheable Content",
+    "risk": "Informational (Medium)",
+    "url": "https://juice-shop.herokuapp.com/ftp",
+    "param": "",
+    "description": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+    "solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+    "cwe": "524",
+    "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>"
+  },
+  {
+    "name": "Storable but Non-Cacheable Content",
+    "risk": "Informational (Medium)",
+    "url": "https://juice-shop.herokuapp.com",
+    "param": "",
+    "description": "<p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users.</p>",
+    "solution": "",
+    "cwe": "524",
+    "reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>"
+  }
+]

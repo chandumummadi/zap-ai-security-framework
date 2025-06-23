@@ -17,8 +17,9 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-INPUT_FILE = Path("reports/parsed_report.json")
-OUTPUT_FILE = Path("reports/enriched_report.json")
+# File paths
+INPUT_FILE = Path("output/parsed_report.json")
+OUTPUT_FILE = Path("output/enriched_report.json")
 
 
 # Optional: test mode to avoid using full quota
