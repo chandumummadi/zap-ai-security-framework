@@ -133,21 +133,46 @@ zap-ai-security-framework/
 
 ---
 
-## 🧪 How to Use
-
 ### 🧷 Prerequisites
 
 * Docker must be installed and running
 * Python 3.10+
 * OpenAI API Key in `.env` file:
 
-```env
-OPENAI_API_KEY=your_key_here
+
+## 🔧 Setup & Recreate This Project Locally ?
+Follow these steps to clone and run the **ZAP AI Security Framework** on your local machine.
+
+### 🧷 0. Prerequisites
+
+* Docker must be installed and running
+* Python 3.10+
+* OpenAI API Key
+
+
+
+### 📥 1. Clone the Repository
+
+```bash
+git clone https://github.com/chandumummadi/zap-ai-security-framework.git
+cd zap-ai-security-framework
 ```
 
 ---
 
-### 📦 Install Dependencies
+### 🧪 2. Create and Activate a Virtual Environment
+
+Using Python’s built-in `venv`:
+
+```bash
+python -m venv venv
+source venv/bin/activate        # On macOS/Linux
+venv\Scripts\activate.bat       # On Windows
+```
+
+---
+
+### 📦 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -155,18 +180,37 @@ pip install -r requirements.txt
 
 ---
 
-### 🚀 Run the Scan Locally
+### 🔐 4. Set Up Environment Variables
+
+Create a `.env` file in the root directory and add your OpenAI API key:
+
+```env
+OPENAI_API_KEY="paste-your-openai-api-key-here"
+```
+
+---
+
+### 🐳 5. Make Sure Docker is Running
+
+This project runs OWASP ZAP using a Docker container, so ensure Docker is installed and running.
+
+---
+
+### 🚀 6. Run a Scan
 
 ```bash
 python security-scan/main.py --mode baseline --target https://example.com
 ```
 
-Check results in:
-
-* `output/final_report.html`
-* `output/enriched_report.json`
+> Reports will be saved in the `/output` directory:
+>
+> * `final_report.html` – Human-readable AI-enriched report
+> * `enriched_report.json` – GPT-explained vulnerabilities
 
 ---
+
+
+
 
 ## 💡 Future Improvements
 
