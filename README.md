@@ -1,5 +1,5 @@
 
-# 🔐 AI-Powered Dynamic App Security Testing with OWASP ZAP and GitHub Actions
+# 🔐 AI-Powered Dynamic App Security Testing with OWASP ZAP
 
 
 ## 🚀 Project Overview
